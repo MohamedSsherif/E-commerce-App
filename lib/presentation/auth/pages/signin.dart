@@ -1,3 +1,4 @@
+import 'package:ecommerce/data/auth/models/user_signin_req.dart';
 import 'package:ecommerce/presentation/auth/pages/enter_password.dart';
 import 'package:ecommerce/presentation/auth/pages/signup.dart';
 import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
@@ -7,27 +8,31 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SigninPage extends StatelessWidget {
-  const SigninPage({super.key});
+   SigninPage({super.key});
+   final TextEditingController _emailCon = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BasicAppbar(hideBack: true,),
+        appBar: const BasicAppbar(
+          hideBack: true,
+        ),
         body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _signinText(context),
-          const SizedBox(height: 20),
-          _emailField(context),
-          const SizedBox(height: 20),
-          _button(context),
-          const SizedBox(height: 20),
-          _createAccount(context),
-        ],
-      ),
-    ));
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _signinText(context),
+              const SizedBox(height: 20),
+              _emailField(context),
+              const SizedBox(height: 20),
+              _button(context),
+              const SizedBox(height: 20),
+              _createAccount(context),
+            ],
+          ),
+        ));
   }
 
   Widget _signinText(BuildContext context) {
@@ -38,7 +43,9 @@ class SigninPage extends StatelessWidget {
   }
 
   Widget _emailField(BuildContext context) {
+    
     return TextFormField(
+      controller: _emailCon,
       decoration: const InputDecoration(
         hintText: 'Enter Email',
       ),
@@ -48,7 +55,12 @@ class SigninPage extends StatelessWidget {
   Widget _button(BuildContext context) {
     return BasicAppButton(
       onPressed: () {
-         AppNavigator.push(context, const EnterPasswordPage());
+        AppNavigator.push(
+            context,
+            EnterPasswordPage(
+                signinReq: UserSigninReq(
+              email: _emailCon.text,
+            )));
       },
       title: 'continue',
     );
@@ -56,15 +68,16 @@ class SigninPage extends StatelessWidget {
 
   Widget _createAccount(BuildContext context) {
     return RichText(
-        text:   TextSpan(
+        text: TextSpan(
             text: 'Don\'t have an account? ',
             style: const TextStyle(color: Colors.white, fontSize: 16),
             children: [
           TextSpan(
               text: 'Create one',
-              recognizer: TapGestureRecognizer()..onTap = () {
-                  AppNavigator.push(context,  SignupPage());
-              },
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  AppNavigator.push(context, SignupPage());
+                },
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
