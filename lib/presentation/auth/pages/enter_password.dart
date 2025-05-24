@@ -7,6 +7,7 @@ import 'package:ecommerce/presentation/auth/pages/forgot_password.dart';
 import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/appbar/app_bar.dart';
 import 'package:ecommerce/common/widgets/button/basic_app_button.dart';
+import 'package:ecommerce/presentation/home/pages/home.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,6 @@ class EnterPasswordPage extends StatelessWidget {
         appBar: const BasicAppbar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-
           child: BlocProvider(
             create: (context) => ButtonStateCubit(),
             child: BlocListener<ButtonStateCubit, ButtonState>(
@@ -34,11 +34,16 @@ class EnterPasswordPage extends StatelessWidget {
                     behavior: SnackBarBehavior.floating,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                }else if(state is ButtonSuccessState) {
-              var snackbar = SnackBar(content: Text("success"),behavior: SnackBarBehavior.floating,);
-                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-           
-            }
+                } else if (state is ButtonSuccessState) {
+                  AppNavigator.pushAndRemove(context, const HomePage());
+                } else if (state is ButtonLoadingState) {
+                  var snackbar = const SnackBar(
+                    content: Text("loading"),
+                    behavior: SnackBarBehavior.floating,
+                    duration: Duration(seconds: 1),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,20 +79,18 @@ class EnterPasswordPage extends StatelessWidget {
   }
 
   Widget _button(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return BasicReactiveButton(
-          onPressed: () {
-            signinReq.password = _passwordCon.text;
-            context.read<ButtonStateCubit>().execute(
-              usecase: SigninUseCase(),
-              params: signinReq,
-               );
-          },
-          title: 'continue',
-        );
-      }
-    );
+    return Builder(builder: (context) {
+      return BasicReactiveButton(
+        onPressed: () {
+          signinReq.password = _passwordCon.text;
+          context.read<ButtonStateCubit>().execute(
+                usecase: SigninUseCase(),
+                params: signinReq,
+              );
+        },
+        title: 'continue',
+      );
+    });
   }
 
   Widget _forgotPassword(BuildContext context) {
@@ -100,7 +103,7 @@ class EnterPasswordPage extends StatelessWidget {
               text: 'Reset',
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  AppNavigator.push(context, const ForgotPasswordPage());
+                  AppNavigator.push(context, ForgotPasswordPage());
                 },
               style: const TextStyle(
                   color: Colors.white,

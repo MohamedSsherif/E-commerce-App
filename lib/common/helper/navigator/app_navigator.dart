@@ -15,4 +15,12 @@ static void push(BuildContext context, Widget widget) {
     MaterialPageRoute(builder: (context) => widget)
   );
 }
+
+static void pushAndRemove(BuildContext context, Widget widget) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(builder: (context) => widget),
+    (Route<dynamic> route) => false
+  );
+}
 }

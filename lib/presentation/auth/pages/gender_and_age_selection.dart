@@ -1,10 +1,12 @@
 import 'package:ecommerce/common/bloc/button/button_state.dart';
 import 'package:ecommerce/common/bloc/button/button_state_cubit.dart';
 import 'package:ecommerce/common/helper/bottomsheet/app_bottomsheet.dart';
+import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/button/basic_reactive_button.dart';
 import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:ecommerce/data/auth/models/user_creation_req.dart';
 import 'package:ecommerce/domain/auth/usecase/signup.dart';
+import 'package:ecommerce/presentation/auth/pages/signin.dart';
 import 'package:ecommerce/presentation/auth/widgets/ages.dart';
 import 'package:ecommerce/presentation/bloc/age_selection_cubit.dart';
 import 'package:ecommerce/presentation/bloc/ages_display_cubit.dart';
@@ -32,16 +34,25 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
           BlocProvider(create: (context) => AgesDisplayCubit()),
           BlocProvider(create: (context) => ButtonStateCubit()),
         ],
-
         child: BlocListener<ButtonStateCubit, ButtonState>(
           listener: (context, state) {
-             if (state is ButtonFailureState ) {
-                var snackbar = SnackBar(content: Text(state.errorMessage),behavior: SnackBarBehavior.floating,);
-                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-            } else if(state is ButtonSuccessState) {
-              var snackbar = SnackBar(content: Text("success"),behavior: SnackBarBehavior.floating,);
-                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-           
+            if (state is ButtonFailureState) {
+              var snackbar = SnackBar(
+                content: Text(state.errorMessage),
+                behavior: SnackBarBehavior.floating,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            } else if (state is ButtonSuccessState) {
+              var snackbar = SnackBar(
+                content: Text("success"),
+                behavior: SnackBarBehavior.floating,
+
+              );
+              AppNavigator.pushReplacement(
+                context,
+                SigninPage(),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           },
           child: Column(
@@ -73,7 +84,6 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
             ],
           ),
         ),
-        
       ),
     );
   }
@@ -170,6 +180,8 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
         child: Builder(builder: (context) {
           return BasicReactiveButton(
             onPressed: () {
+           
+            
               userCreationReq.gender =
                   context.read<GenderSelectionCubit>().selectedIndex;
               userCreationReq.age =
@@ -177,6 +189,7 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
               context
                   .read<ButtonStateCubit>()
                   .execute(usecase: SignupUseCase(), params: userCreationReq);
+             
             },
             title: 'Finish',
           );
