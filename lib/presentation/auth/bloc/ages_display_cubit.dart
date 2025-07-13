@@ -1,8 +1,8 @@
 import 'package:ecommerce/domain/auth/usecase/get_ages.dart';
-import 'package:ecommerce/presentation/bloc/ages_display_states.dart';
+import 'package:ecommerce/presentation/auth/bloc/ages_display_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../service_locator.dart';
+import '../../../../service_locator.dart';
 
 class AgesDisplayCubit extends Cubit<AgesDisplayState> {
   AgesDisplayCubit() : super(AgesLoading());

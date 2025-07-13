@@ -1,6 +1,6 @@
 import 'package:ecommerce/domain/auth/usecase/is_logged_in.dart';
 import 'package:ecommerce/service_locator.dart';
-import 'package:ecommerce/splash/bloc/splash_state.dart';
+import 'package:ecommerce/presentation/splash/bloc/splash_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

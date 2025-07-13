@@ -8,9 +8,9 @@ import 'package:ecommerce/data/auth/models/user_creation_req.dart';
 import 'package:ecommerce/domain/auth/usecase/signup.dart';
 import 'package:ecommerce/presentation/auth/pages/signin.dart';
 import 'package:ecommerce/presentation/auth/widgets/ages.dart';
-import 'package:ecommerce/presentation/bloc/age_selection_cubit.dart';
-import 'package:ecommerce/presentation/bloc/ages_display_cubit.dart';
-import 'package:ecommerce/presentation/bloc/gender_selection_cubit.dart';
+import 'package:ecommerce/presentation/auth/bloc/age_selection_cubit.dart';
+import 'package:ecommerce/presentation/auth/bloc/ages_display_cubit.dart';
+import 'package:ecommerce/presentation/auth/bloc/gender_selection_cubit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
