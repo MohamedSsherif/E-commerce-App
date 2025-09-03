@@ -4,5 +4,6 @@ abstract class ProductRepository {
   Future<Either> getTopSelling();
   Future<Either> getNewIn();
   Future<Either> getProductByCategoryId(String categoryId);
+  Future<Either> getProductsByTitle(String title);
 
 }

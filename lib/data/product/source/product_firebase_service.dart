@@ -8,8 +8,8 @@ import '../models/product.dart';
 abstract class ProductFirebaseService {
   Future<Either> getTopSelling();
   Future<Either> getNewIn();
-  // Future<Either> getProductsByCategoryId(String categoryId);
-  // Future<Either> getProductsByTitle(String title);
+  Future<Either> getProductsByCategoryId(String categoryId);
+  Future<Either> getProductsByTitle(String title);
   // Future<Either> addOrRemoveFavoriteProduct(ProductEntity product);
   // Future<bool> isFavorite(String productId);
   // Future<Either> getFavoritesProducts();
@@ -39,14 +39,14 @@ class ProductFirebaseServiceImpl extends ProductFirebaseService {
   Future<Either> getNewIn() async {
      try {
       var returnedData = await FirebaseFirestore.instance.collection(
-        'Products'
+        'products'
       )
-      // .where(
+      .where(
       //    'salesNumber',
        // isGreaterThanOrEqualTo: 20
-        // 'createdDate',
-        // isGreaterThanOrEqualTo: DateTime(2024,07,25)
-      //)
+        'createdDate',
+        isGreaterThanOrEqualTo: DateTime(2025,07,10)
+      )
       .get();
       return Right(returnedData.docs.map((e) => e.data()).toList());
     } catch (e) {
@@ -57,40 +57,40 @@ class ProductFirebaseServiceImpl extends ProductFirebaseService {
   }
 
   
-  // @override
-  // Future<Either> getProductsByCategoryId(String categoryId) async {
-  //    try {
-  //     var returnedData = await FirebaseFirestore.instance.collection(
-  //       'Products'
-  //     ).where(
-  //       'categoryId',
-  //       isEqualTo: categoryId
-  //     ).get();
-  //     return Right(returnedData.docs.map((e) => e.data()).toList());
-  //   } catch (e) {
-  //     return const Left(
-  //       'Please try again'
-  //     );
-  //   }
-  // }
+  @override
+  Future<Either> getProductsByCategoryId(String categoryId) async {
+     try {
+      var returnedData = await FirebaseFirestore.instance.collection(
+        'products'
+      ).where(
+        'categoryId',
+        isEqualTo: categoryId
+      ).get();
+      return Right(returnedData.docs.map((e) => e.data()).toList());
+    } catch (e) {
+      return const Left(
+        'Please try again'
+      );
+    }
+  }
   
-  // @override
-  // Future<Either> getProductsByTitle(String title) async {
-  //    try {
-  //     var returnedData = await FirebaseFirestore.instance.collection(
-  //       'Products'
-  //     ).where(
-  //       'title',
-  //       isGreaterThanOrEqualTo: title,
-  //      )
-  //     .get();
-  //     return Right(returnedData.docs.map((e) => e.data()).toList());
-  //   } catch (e) {
-  //     return const Left(
-  //       'Please try again'
-  //     );
-  //   }
-  // }
+  @override
+  Future<Either> getProductsByTitle(String title) async {
+     try {
+      var returnedData = await FirebaseFirestore.instance.collection(
+        'products'
+      ).where(
+        'title',
+        isGreaterThanOrEqualTo: title,
+       )
+      .get();
+      return Right(returnedData.docs.map((e) => e.data()).toList());
+    } catch (e) {
+      return const Left(
+        'Please try again'
+      );
+    }
+  }
   
   // @override
   // Future < Either > addOrRemoveFavoriteProduct(ProductEntity product) async {

@@ -15,74 +15,47 @@ import 'package:ecommerce/domain/category/repository/category.dart';
 import 'package:ecommerce/domain/category/usecases/get_categories.dart';
 import 'package:ecommerce/domain/product/repository/product.dart';
 import 'package:ecommerce/domain/product/usecases/get_new_in.dart';
+import 'package:ecommerce/domain/product/usecases/get_product_by_title.dart';
+import 'package:ecommerce/domain/product/usecases/get_products_by_category_id.dart';
 import 'package:ecommerce/domain/product/usecases/get_top_selling.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
 
-Future<void> initializeDependencies() async{
+Future<void> initializeDependencies() async {
   //services
-  sl.registerSingleton<AuthFirebaseService>(
-    AuthFirebaseServiceImpl()
-  );
+  sl.registerSingleton<AuthFirebaseService>(AuthFirebaseServiceImpl());
 
-   sl.registerSingleton<CategoryFirebaseService>(
-    CategoryFirebaseServiceImpl()
-  );
+  sl.registerSingleton<CategoryFirebaseService>(CategoryFirebaseServiceImpl());
 
-     sl.registerSingleton<ProductFirebaseService>(
-    ProductFirebaseServiceImpl()
-  );
-
-
-
+  sl.registerSingleton<ProductFirebaseService>(ProductFirebaseServiceImpl());
 
   //repositories
-  sl.registerSingleton<AuthRepository>(
-    AuthRepositoryImpl()
-  );
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
 
-  sl.registerSingleton<CategoryRepository>(
-    CategoryRepositoryImpl()
-  );
+  sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl());
 
-    sl.registerSingleton<ProductRepository>(
-    ProductRepositoryImpl()
-  );
-
-
-
+  sl.registerSingleton<ProductRepository>(ProductRepositoryImpl());
 
   //usecases
-  sl.registerSingleton<SignupUseCase>(
-    SignupUseCase()
-  );
+  sl.registerSingleton<SignupUseCase>(SignupUseCase());
 
-  sl.registerSingleton<GetAgesUseCase>(
-    GetAgesUseCase()
-  );
-  
-  sl.registerSingleton<SigninUseCase>(
-    SigninUseCase()
-  );
+  sl.registerSingleton<GetAgesUseCase>(GetAgesUseCase());
+
+  sl.registerSingleton<SigninUseCase>(SigninUseCase());
   sl.registerSingleton<SendPasswordResetEmailUseCase>(
-    SendPasswordResetEmailUseCase()
-  );
-  sl.registerSingleton<IsLoggedInUseCase>(
-    IsLoggedInUseCase()
-  );
-  sl.registerSingleton<GetUserUseCase>(
-    GetUserUseCase()
-  );
-  sl.registerSingleton<GetCategoriesUseCase>(
-    GetCategoriesUseCase()
-  );
+      SendPasswordResetEmailUseCase());
+  sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
+  sl.registerSingleton<GetUserUseCase>(GetUserUseCase());
+  sl.registerSingleton<GetCategoriesUseCase>(GetCategoriesUseCase());
 
-    sl.registerSingleton<GetTopSellingUseCase>(
-    GetTopSellingUseCase()
-  );
+  sl.registerSingleton<GetTopSellingUseCase>(GetTopSellingUseCase());
 
-      sl.registerSingleton<GetNewInUseCase>(
-    GetNewInUseCase()
-  );
+  sl.registerSingleton<GetNewInUseCase>(GetNewInUseCase());
+
+  sl.registerSingleton<GetProductsByCategoryIdUseCase>(
+      GetProductsByCategoryIdUseCase());
+
+  sl.registerSingleton<GetProductsByTitleUseCase>(
+      GetProductsByTitleUseCase());
 }
